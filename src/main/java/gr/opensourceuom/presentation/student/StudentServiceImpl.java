@@ -1,5 +1,6 @@
 package gr.opensourceuom.presentation.student;
 
+import gr.opensourceuom.presentation.course.Course;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     public Student getStudentById(Long id) {
-        return students.stream().filter(student -> student.getId().equals(id)).findFirst().orElse(new Student());
+        return students.stream().filter(student -> student.getStudent_id().equals(id)).findFirst().orElse(new Student());
     }
 
     public Student getStudentByLastName(String lastName) {
@@ -46,6 +47,11 @@ public class StudentServiceImpl implements StudentService {
         studentById.setFirstName(student.getFirstName() != null ? student.getFirstName() : studentById.getFirstName());
         studentById.setLastName(student.getLastName() != null ? student.getLastName() : studentById.getLastName());
         return studentById;
+    }
+
+    @Override
+    public List<Course> getCourseByStudent(Long studentId) {
+        return new ArrayList<>();
     }
 
 

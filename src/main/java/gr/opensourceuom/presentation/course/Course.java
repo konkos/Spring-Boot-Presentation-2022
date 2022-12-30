@@ -1,10 +1,10 @@
 package gr.opensourceuom.presentation.course;
 
-import gr.opensourceuom.presentation.student.Student;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import gr.opensourceuom.presentation.registration.Registration;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -15,23 +15,15 @@ import java.util.Set;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "course_id", nullable = false)
+    private Long course_id;
 
     private String name;
 
     private int ects;
 
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.PERSIST)
-    private Set<Student> students = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "course")
+    @JsonIgnore
+    private Set<Registration> registeredStudents;
 
-    public Set<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(Set<Student> students) {
-        this.students = students;
-    }
 }

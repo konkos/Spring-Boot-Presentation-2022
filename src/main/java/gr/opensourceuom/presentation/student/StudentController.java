@@ -1,5 +1,6 @@
 package gr.opensourceuom.presentation.student;
 
+import gr.opensourceuom.presentation.course.Course;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(@Qualifier("studentServiceImpl") StudentService studentService) {
+    public StudentController(@Qualifier("studentServiceDB") StudentService studentService) {
         this.studentService = studentService;
     }
 
@@ -44,5 +45,10 @@ public class StudentController {
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudentById(id);
+    }
+
+    @GetMapping("/{student_id}/courses")
+    public List<Course> getCoursesByStudent(@PathVariable Long student_id){
+        return studentService.getCourseByStudent(student_id);
     }
 }

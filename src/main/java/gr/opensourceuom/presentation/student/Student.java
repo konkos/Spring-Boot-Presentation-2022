@@ -1,6 +1,8 @@
 package gr.opensourceuom.presentation.student;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import gr.opensourceuom.presentation.course.Course;
+import gr.opensourceuom.presentation.registration.Registration;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,22 +21,23 @@ import java.util.Set;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "student_id", nullable = false)
+    private Long student_id;
 
     private String firstName;
 
     private String lastName;
 
-    @ManyToMany
-    private Set<Course> courses;
+    @OneToMany(mappedBy = "student")
+    @JsonIgnore
+    private Set<Registration> registrations;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Student student = (Student) o;
-        return id != null && Objects.equals(id, student.id);
+        return student_id != null && Objects.equals(student_id, student.student_id);
     }
 
     @Override

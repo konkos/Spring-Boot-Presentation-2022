@@ -1,5 +1,7 @@
 package gr.opensourceuom.presentation.student;
 
+import gr.opensourceuom.presentation.course.Course;
+
 import java.util.List;
 
 public interface StudentService {
@@ -15,4 +17,6 @@ public interface StudentService {
     void deleteStudentById(Long id);
 
     Student updateStudent(Long id, Student student);
+
+    List<Course> getCourseByStudent(Long studentId);
 }

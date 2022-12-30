@@ -1,7 +1,11 @@
 package gr.opensourceuom.presentation.student;
 
+import gr.opensourceuom.presentation.course.Course;
+import gr.opensourceuom.presentation.registration.Registration;
+import gr.opensourceuom.presentation.registration.RegistrationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("studentServiceDB")
@@ -9,8 +13,11 @@ public class StudentServiceDB implements StudentService {
 
     private final StudentRepository studentRepository;
 
-    public StudentServiceDB(StudentRepository studentRepository) {
+    private final RegistrationRepository registrationRepository;
+
+    public StudentServiceDB(StudentRepository studentRepository, RegistrationRepository registrationRepository) {
         this.studentRepository = studentRepository;
+        this.registrationRepository = registrationRepository;
     }
 
     @Override
@@ -46,5 +53,17 @@ public class StudentServiceDB implements StudentService {
         studentById.setFirstName(student.getFirstName() != null ? student.getFirstName() : studentById.getFirstName());
         studentById.setLastName(student.getLastName() != null ? student.getLastName() : studentById.getLastName());
         return studentRepository.save(studentById);
+    }
+
+    @Override
+    public List<Course> getCourseByStudent(Long studentId) {
+        Student studentById = getStudentById(studentId);
+        List<Registration> coursesByStudent = registrationRepository.findCoursesByStudent(studentId);
+        List<Course> courses = new ArrayList<>();
+
+        for (Registration registration : coursesByStudent) {
+            courses.add(registration.getCourse());
+        }
+        return courses;
     }
 }
