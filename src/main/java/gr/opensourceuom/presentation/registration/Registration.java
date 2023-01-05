@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 )
 public class Registration {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -30,7 +30,7 @@ public class Registration {
     public Registration() {
     }
 
-    public Registration(long id, Student student, Course course) {
+    public Registration(Student student, Course course) {
         this.student = student;
         this.course = course;
         this.grade = 0;
