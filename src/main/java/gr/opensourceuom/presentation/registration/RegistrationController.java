@@ -4,6 +4,8 @@ import gr.opensourceuom.presentation.course.Course;
 import gr.opensourceuom.presentation.course.CourseRepository;
 import gr.opensourceuom.presentation.student.Student;
 import gr.opensourceuom.presentation.student.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/register")
 public class RegistrationController {
+
+    Logger logger = LoggerFactory.getLogger(RegistrationController.class);
 
     private final RegistrationRepository registrationRepository;
 
@@ -35,15 +39,15 @@ public class RegistrationController {
         Optional<Course> courseOptional = courseRepository.findById(course_id);
 
 
-        System.out.println(studentOptional);
-        System.out.println(courseOptional);
+        logger.info(studentOptional.toString());
+        logger.info(courseOptional.toString());
 
         if (studentOptional.isEmpty() || courseOptional.isEmpty()) return;
 
         Course course = courseOptional.get();
         Student student = studentOptional.get();
         Registration registration = new Registration().setCourse(course).setId(id).setStudent(student);
-        System.out.println(registration);
+        logger.info(registration.toString());
         registrationRepository.save(registration);
     }
 

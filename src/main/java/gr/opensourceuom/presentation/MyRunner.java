@@ -46,6 +46,9 @@ public class MyRunner implements CommandLineRunner {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     private void saveRegistrationsToDB() throws Exception {
+
+        if (registrationRepository.count() != 0) return;
+
         List<Course> allCourses = courseRepository.findAll();
         List<Student> allStudents = studentRepository.findAll();
 
@@ -72,6 +75,7 @@ public class MyRunner implements CommandLineRunner {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void saveCoursesToDB() {
+        if (courseRepository.count() != 0) return;
         for (int i = 0; i < 10; i++) {
             Course course = new Course();
             course.setName("CourseName " + i);
@@ -82,6 +86,7 @@ public class MyRunner implements CommandLineRunner {
 
     @Transactional(noRollbackFor = Exception.class, propagation = Propagation.REQUIRES_NEW)
     private void saveStudentsToDB() {
+        if (studentRepository.count() != 0) return;
         for (int i = 0; i < 10; i++) {
             Student student = new Student();
             student.setFirstName("FirstName " + i);

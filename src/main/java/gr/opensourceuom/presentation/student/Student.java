@@ -1,7 +1,6 @@
 package gr.opensourceuom.presentation.student;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import gr.opensourceuom.presentation.course.Course;
 import gr.opensourceuom.presentation.registration.Registration;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

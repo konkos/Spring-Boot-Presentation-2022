@@ -12,7 +12,7 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    public StudentController(@Qualifier("studentServiceDB") StudentService studentService) {
+    public StudentController(@Qualifier("studentServiceImpl") StudentService studentService) {
         this.studentService = studentService;
     }
 
@@ -48,7 +48,7 @@ public class StudentController {
     }
 
     @GetMapping("/{student_id}/courses")
-    public List<Course> getCoursesByStudent(@PathVariable Long student_id){
+    public List<Course> getCoursesByStudent(@PathVariable Long student_id) {
         return studentService.getCourseByStudent(student_id);
     }
 }
